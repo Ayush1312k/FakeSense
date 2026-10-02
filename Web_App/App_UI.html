@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FakeSense | Digital Verification & Forensics</title>
+  
+
+  <style>
+    :root {
+      --bg-newspaper: #b2afaa;
+      --text-black: #000000;
+      --border-black: #000000;
+      --paper-tint: rgba(255, 255, 255, 0.22);
+      --card-shadow: 4px 4px 0px #000000;
+    }
+
+    html {
+      box-sizing: border-box;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    body, button, input, textarea, select {
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: var(--bg-newspaper);
+      color: var(--text-black);
+      font-family: 'Times New Roman', Times, serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: clamp(12px, 3vw, 25px) clamp(8px, 2.5vw, 15px) 40px;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    img, svg, video, canvas, audio, iframe, embed, object {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* VINTAGE NEWSPAPER INTRO STAMP (EARLIER ANIMATION) */
+    #intro-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: var(--bg-newspaper);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: removeOverlay 0.3s ease forwards 1.9s;
+      border: clamp(4px, 1vw, 8px) solid var(--border-black);
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .intro-stamp {
+      border: 4px double var(--border-black);
+      padding: clamp(16px, 4vw, 24px) clamp(18px, 6vw, 40px);
+      text-align: center;
+      background: var(--paper-tint);
+      box-shadow: clamp(4px, 1vw, 8px) clamp(4px, 1vw, 8px) 0px var(--border-black);
+      animation: stampIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      max-width: min(520px, 92vw);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .intro-extra {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.9rem, 2.8vw, 1.2rem);
+      letter-spacing: clamp(1.5px, 0.5vw, 4px);
+      margin-bottom: 8px;
+    }
+
+    .intro-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .intro-tagline {
+      font-family: 'Times New Roman', Times, serif;
+      font-style: italic;
+      font-size: clamp(0.85rem, 2.2vw, 1.1rem);
+      margin-top: 10px;
+    }
+
+    @keyframes stampIn {
+      0% { transform: scale(0.6) rotate(-3deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes removeOverlay {
+      to { opacity: 0; visibility: hidden; pointer-events: none; }
+    }
+
+    body.skip-intro #intro-overlay {
+      display: none !important;
+    }
+
+    /* NEWSPAPER WRAPPER */
+    .newspaper-sheet {
+      width: 100%;
+      max-width: 1100px;
+      background-color: var(--bg-newspaper);
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+    }
+
+    /* TOP DATELINE BAR */
+    .dateline-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.72rem, 1.8vw, 0.85rem);
+      letter-spacing: clamp(0.5px, 0.2vw, 1px);
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-black);
+      text-transform: uppercase;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .double-rule-thick {
+      border-top: 4px solid var(--border-black);
+      border-bottom: 1px solid var(--border-black);
+      padding: 3px 0;
+      margin: 6px 0 10px;
+    }
+
+    .double-rule-thin {
+      border-top: 1px solid var(--border-black);
+      border-bottom: 3px solid var(--border-black);
+      padding: 3px 0;
+      margin: 10px 0 15px;
+    }
+
+    /* MASTHEAD */
+    .masthead {
+      text-align: center;
+      padding: 10px 0 6px;
+    }
+
+    .masthead-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(2.3rem, 7.8vw, 6.2rem);
+      font-weight: 900;
+      letter-spacing: clamp(1.5px, 0.5vw, 4px);
+      text-transform: uppercase;
+      color: var(--text-black);
+      text-decoration: none;
+      display: inline-block;
+      line-height: 0.95;
+      margin: 0;
+      max-width: 100%;
+      word-break: break-word;
+    }
+
+    .masthead-title:hover {
+      text-decoration: none;
+    }
+
+    .masthead-subtitle {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.7rem, 1.8vw, 1.05rem);
+      font-weight: 700;
+      letter-spacing: clamp(1px, 0.3vw, 3px);
+      margin-top: 12px;
+      text-transform: uppercase;
+      line-height: 1.35;
+      padding: 0 5px;
+    }
+
+    /* NAVIGATION */
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(8px, 2.5vw, 25px);
+      padding: 8px 0;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.82rem, 2vw, 0.95rem);
+      letter-spacing: clamp(1px, 0.2vw, 2px);
+      text-transform: uppercase;
+      border-top: 1px solid var(--border-black);
+      border-bottom: 1px solid var(--border-black);
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .nav-item {
+      color: var(--text-black);
+      text-decoration: none;
+      padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 14px);
+      font-weight: 700;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      text-align: center;
+      touch-action: manipulation;
+    }
+
+    .nav-item:hover {
+      background-color: var(--text-black);
+      color: var(--bg-newspaper);
+    }
+
+    .nav-item.active {
+      border: 1px solid var(--border-black);
+      background-color: var(--paper-tint);
+      box-shadow: 2px 2px 0px var(--border-black);
+    }
+
+    /* FRONT PAGE HEADLINE BANNER */
+    .headline-banner {
+      text-align: center;
+      border-bottom: 2px solid var(--border-black);
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+      width: 100%;
+    }
+
+    .main-headline {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(1.4rem, 4vw, 2.8rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin: 0 0 10px;
+      letter-spacing: 0.5px;
+      word-break: break-word;
+    }
+
+    .headline-deck {
+      font-family: 'Times New Roman', Times, serif;
+      font-style: italic;
+      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+      max-width: 850px;
+      margin: 0 auto;
+      line-height: 1.5;
+      padding: 0 5px;
+    }
+
+    /* BROADSHEET TWO-COLUMN DESK */
+    .newspaper-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      position: relative;
+      align-items: start;
+      width: 100%;
+    }
+
+    /* Vertical dividing rule between columns */
+    .newspaper-grid::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(50% - 0.5px);
+      width: 1px;
+      background-color: var(--border-black);
+    }
+
+    .column-box {
+      background: var(--paper-tint);
+      border: 2px solid var(--border-black);
+      box-shadow: var(--card-shadow);
+      padding: clamp(18px, 3.5vw, 30px) clamp(14px, 3vw, 25px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      align-self: start;
+      height: fit-content;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .column-header {
+      border-bottom: 2px solid var(--border-black);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+
+    .section-badge {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      letter-spacing: clamp(1px, 0.3vw, 2px);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .column-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(1.3rem, 3vw, 1.65rem);
+      font-weight: 700;
+      margin: 0 0 6px;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .column-lead {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      line-height: 1.55;
+      margin: 0 0 20px;
+      text-align: justify;
+    }
+
+    /* FILE UPLOAD / PHOTO PLATE AREA */
+    .photo-plate-zone {
+      border: 2px dashed var(--border-black);
+      background: rgba(255, 255, 255, 0.15);
+      padding: clamp(16px, 3vw, 25px) clamp(10px, 2.5vw, 15px);
+      text-align: center;
+      margin-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: background 0.2s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .photo-plate-zone:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .photo-plate-zone input[type="file"] {
+      display: none;
+    }
+
+    .photo-plate-label {
+      font-family: 'Times New Roman', Times, serif;
+      font-weight: 700;
+      font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+      letter-spacing: clamp(0.8px, 0.2vw, 1.5px);
+      background-color: var(--bg-newspaper);
+      color: var(--text-black);
+      border: 2px solid var(--border-black);
+      padding: 10px 16px;
+      cursor: pointer;
+      box-shadow: 3px 3px 0px var(--border-black);
+      transition: all 0.15s ease;
+      display: inline-block;
+      max-width: 100%;
+      text-align: center;
+      word-break: break-word;
+      touch-action: manipulation;
+    }
+
+    .photo-plate-label:hover {
+      background-color: var(--text-black);
+      color: var(--bg-newspaper);
+      transform: translate(1px, 1px);
+      box-shadow: 2px 2px 0px var(--border-black);
+    }
+
+    .file-caption {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.78rem, 1.8vw, 0.85rem);
+      color: var(--text-black);
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      max-width: 100%;
+    }
+
+    /* NEWS WIRE TEXTAREA */
+    textarea {
+      width: 100%;
+      min-height: 135px;
+      height: 165px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid var(--border-black);
+      color: var(--text-black);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      line-height: 1.5;
+      padding: 14px;
+      resize: vertical;
+      outline: none;
+      box-sizing: border-box;
+      margin-bottom: 22px;
+      box-shadow: inset 2px 2px 0px rgba(0,0,0,0.08);
+      max-width: 100%;
+    }
+
+    textarea::placeholder {
+      color: rgba(0, 0, 0, 0.6);
+      font-style: italic;
+    }
+
+    textarea:focus {
+      background: rgba(255, 255, 255, 0.4);
+      border-color: var(--border-black);
+      box-shadow: 2px 2px 0px var(--border-black);
+    }
+
+    /* PRESS ACTION BUTTONS */
+    .press-action-btn {
+      width: 100%;
+      padding: clamp(12px, 2.5vw, 14px);
+      background-color: var(--bg-newspaper);
+      color: var(--text-black);
+      border: 2px solid var(--border-black);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.88rem, 2vw, 1rem);
+      font-weight: 900;
+      letter-spacing: clamp(1px, 0.3vw, 2px);
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 4px 4px 0px var(--border-black);
+      transition: all 0.15s ease;
+      margin-top: 10px;
+      box-sizing: border-box;
+      touch-action: manipulation;
+    }
+
+    .press-action-btn:hover:not(:disabled) {
+      background-color: var(--text-black);
+      color: var(--bg-newspaper);
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--border-black);
+    }
+
+    .press-action-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: 2px 2px 0px var(--border-black);
+      transform: none;
+    }
+
+    /* RESULT BULLETIN BOXES */
+    .result-box {
+      margin-top: 25px;
+      padding: clamp(14px, 3vw, 20px);
+      border: 3px double var(--border-black);
+      background: rgba(255, 255, 255, 0.35);
+      color: var(--text-black);
+      box-shadow: 4px 4px 0px var(--border-black);
+      display: none;
+      animation: paperFadeIn 0.3s ease forwards;
+      box-sizing: border-box;
+      width: 100%;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .result-box.real {
+      display: block;
+      border: 3px double var(--border-black);
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .result-box.fake {
+      display: block;
+      border: 3px double var(--border-black);
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    @keyframes paperFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* NEWSPAPER FOOTER */
+    .newspaper-footer {
+      margin-top: clamp(25px, 5vw, 40px);
+      text-align: center;
+      border-top: 2px solid var(--border-black);
+      padding-top: 15px;
+      font-family: 'Times New Roman', Times, serif;
+      width: 100%;
+    }
+
+    .footer-stamp {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      letter-spacing: clamp(1px, 0.3vw, 2px);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 5px;
+      line-height: 1.35;
+    }
+
+    .footer-copy {
+      font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .footer-links {
+      margin-top: 10px;
+      font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+    }
+
+    /* RESPONSIVE LAYOUT BREAKPOINTS */
+    @media (max-width: 900px) {
+      .newspaper-grid {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .newspaper-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      .newspaper-grid::before {
+        display: none;
+      }
+      .dateline-bar {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+      }
+      .column-box {
+        padding: 20px 16px;
+      }
+      .headline-banner {
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+      }
+      .column-lead {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px 8px 30px;
+      }
+      #intro-overlay {
+        border-width: 4px;
+        padding: 10px;
+      }
+      .intro-stamp {
+        padding: 18px 14px;
+        box-shadow: 4px 4px 0px var(--border-black);
+      }
+      .masthead {
+        padding: 6px 0 4px;
+      }
+      .nav-bar {
+        gap: 8px;
+        margin-bottom: 18px;
+        padding: 6px 0;
+      }
+      .nav-item {
+        font-size: 0.82rem;
+        padding: 4px 8px;
+      }
+      .column-box {
+        padding: 16px 12px;
+        box-shadow: 3px 3px 0px var(--border-black);
+      }
+      .press-action-btn {
+        box-shadow: 3px 3px 0px var(--border-black);
+      }
+      .result-box {
+        padding: 14px 10px;
+        margin-top: 18px;
+        box-shadow: 3px 3px 0px var(--border-black);
+      }
+    }
+
+    @media (min-width: 1400px) {
+      .newspaper-sheet {
+        max-width: 1180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIRST-VISIT STAMP INTRO -->
+  <div id="intro-overlay" title="Click to dismiss">
+    <div class="intro-stamp">
+      <div class="intro-extra">★ EXTRA! EXTRA! ★</div>
+      <h1 class="intro-title">FakeSense</h1>
+      <div class="intro-tagline">The Independent Chronicle of Digital Veracity</div>
+    </div>
+  </div>
+
+  <script>
+    function dismissIntro() {
+      const overlay = document.getElementById('intro-overlay');
+      if (overlay) {
+        overlay.style.transition = 'opacity 0.25s ease';
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          document.body.classList.add('skip-intro');
+        }, 250);
+      }
+    }
+
+    function replayIntro() {
+      document.body.classList.remove('skip-intro');
+      const oldOverlay = document.getElementById('intro-overlay');
+      if (oldOverlay) {
+        const newOverlay = oldOverlay.cloneNode(true);
+        newOverlay.style.display = 'flex';
+        newOverlay.style.opacity = '1';
+        oldOverlay.parentNode.replaceChild(newOverlay, oldOverlay);
+        setupIntroEvents(newOverlay);
+      }
+    }
+
+    function setupIntroEvents(overlay) {
+      if (!overlay) return;
+      overlay.addEventListener('click', dismissIntro);
+      setTimeout(() => {
+        dismissIntro();
+      }, 2100);
+    }
+
+    if (sessionStorage.getItem('fakeSenseIntroShown')) {
+      document.body.classList.add('skip-intro');
+    } else {
+      sessionStorage.setItem('fakeSenseIntroShown', 'true');
+      setupIntroEvents(document.getElementById('intro-overlay'));
+    }
+  </script>
+
+  <div class="newspaper-sheet">
+    <!-- TOP DATELINE -->
+    <div class="dateline-bar">
+      <span>NO. 4,028 • VOL. XXIV</span>
+      <span id="currentDateDisplay">EDITION: FORENSIC SPECIAL</span>
+      <span id="replayIntroBtn" style="cursor: pointer; text-decoration: underline;" title="Replay intro stamp">★ REPLAY INTRO</span>
+      <span>PRICE: COMPLIMENTARY</span>
+    </div>
+
+    <div class="double-rule-thick"></div>
+
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <a href="App_UI.html" class="masthead-title">FakeSense</a>
+      <div class="masthead-subtitle">The Independent Journal of AI Forensics & Digital Verification</div>
+    </header>
+
+    <div class="double-rule-thin"></div>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="nav-bar">
+      <a href="App_UI.html" class="nav-item active">[ Detection Desk ]</a>
+      <a href="about.html" class="nav-item">[ Editorial / About ]</a>
+      <a href="privacy.html" class="nav-item">[ Privacy Policy ]</a>
+    </nav>
+
+    <!-- FRONT PAGE LEAD HEADLINE -->
+    <section class="headline-banner">
+      <h2 class="main-headline">Neural Forensics Desk: Expose Digital Fabrications</h2>
+      <p class="headline-deck">Deploying advanced multi-modal artificial intelligence to scrutinize manipulated imagery and cross-examine unverified news wires against global facts in real time.</p>
+    </section>
+
+    <!-- TWO-COLUMN BROADSHEET WORKBENCH -->
+    <main class="newspaper-grid">
+
+      <!-- COLUMN A: IMAGE FORENSICS -->
+      <section class="column-box box" id="deepfakeBox">
+        <div class="column-header">
+          <span class="section-badge">SECTION I • VISUAL FORENSICS</span>
+          <h3 class="column-title">Photographic Analysis</h3>
+        </div>
+        <p class="column-lead">
+          Upload any photograph or portrait for forensic evaluation. Our algorithms analyze facial structural integrity, pixel synthesis artifacts, lighting anomalies, and AI generator fingerprints.
+        </p>
+
+        <div class="photo-plate-zone">
+          <input type="file" id="deepfakeInput" accept="image/*" />
+          <label for="deepfakeInput" class="photo-plate-label">SELECT PHOTO EVIDENCE</label>
+          <span id="fileName" class="file-caption">Formats supported: JPG, PNG, WEBP (Max 4MB)</span>
+        </div>
+
+        <button id="deepfakeButton" class="press-action-btn" disabled>ANALYZE PHOTOGRAPH</button>
+      </section>
+
+      <!-- COLUMN B: NEWS WIRE VERIFICATION -->
+      <section class="column-box box" id="newsBox">
+        <div class="column-header">
+          <span class="section-badge">SECTION II • WIRE VERIFICATION</span>
+          <h3 class="column-title">News Dispatch Inquiry</h3>
+        </div>
+        <p class="column-lead">
+          Transcribe or paste uncorroborated headlines, rumors, or news articles. The engine cross-references authoritative reporting sources and analyzes deceptive rhetoric.
+        </p>
+
+        <textarea id="newsInput" placeholder="Transcribe the headline or article dispatch here for forensic verification (minimum 20 characters)..."></textarea>
+
+        <button id="newsButton" class="press-action-btn" disabled>VERIFY DISPATCH</button>
+      </section>
+
+    </main>
+
+    <!-- NEWSPAPER FOOTER -->
+    <footer class="newspaper-footer">
+      <div class="footer-stamp">FAKESENSE INVESTIGATIVE BUREAU • DEDICATED TO OBJECTIVE TRUTH</div>
+      <p class="footer-copy">Published with algorithmic vigilance. Powered by Google Gemini Multi-Modal Reasoning. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="App_UI.html" style="color: #000; text-decoration: underline;">Detection Desk</a>
+        <span>•</span>
+        <a href="about.html" style="color: #000; text-decoration: underline;">Editorial / About</a>
+        <span>•</span>
+        <a href="privacy.html" style="color: #000; text-decoration: underline;">Privacy Policy</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Set formatted date on dateline
+    try {
+      const today = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const formatted = today.toLocaleDateString('en-US', options).toUpperCase();
+      const dateEl = document.getElementById('currentDateDisplay');
+      if (dateEl) {
+        dateEl.textContent = formatted + " • FORENSIC SPECIAL";
+      }
+      const replayBtn = document.getElementById('replayIntroBtn');
+      if (replayBtn) {
+        replayBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          replayPaperTear();
+        });
+      }
+    } catch (e) {
+      // fallback
+    }
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>

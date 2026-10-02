@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | FakeSense</title>
+
+  <style>
+    :root {
+      --bg-newspaper: #b2afaa;
+      --text-black: #000000;
+      --border-black: #000000;
+      --paper-tint: rgba(255, 255, 255, 0.22);
+      --card-shadow: 4px 4px 0px #000000;
+    }
+
+    html {
+      box-sizing: border-box;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    body, button, input, textarea, select {
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: var(--bg-newspaper);
+      color: var(--text-black);
+      font-family: 'Times New Roman', Times, serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: clamp(12px, 3vw, 25px) clamp(8px, 2.5vw, 15px) 40px;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    img, svg, video, canvas, audio, iframe, embed, object {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* NEWSPAPER WRAPPER */
+    .newspaper-sheet {
+      width: 100%;
+      max-width: 1100px;
+      background-color: var(--bg-newspaper);
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+    }
+
+    /* TOP DATELINE BAR */
+    .dateline-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.72rem, 1.8vw, 0.85rem);
+      letter-spacing: clamp(0.5px, 0.2vw, 1px);
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-black);
+      text-transform: uppercase;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .double-rule-thick {
+      border-top: 4px solid var(--border-black);
+      border-bottom: 1px solid var(--border-black);
+      padding: 3px 0;
+      margin: 6px 0 10px;
+    }
+
+    .double-rule-thin {
+      border-top: 1px solid var(--border-black);
+      border-bottom: 3px solid var(--border-black);
+      padding: 3px 0;
+      margin: 10px 0 15px;
+    }
+
+    /* MASTHEAD */
+    .masthead {
+      text-align: center;
+      padding: 10px 0 6px;
+    }
+
+    .masthead-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(2.3rem, 7.8vw, 6.2rem);
+      font-weight: 900;
+      letter-spacing: clamp(1.5px, 0.5vw, 4px);
+      text-transform: uppercase;
+      color: var(--text-black);
+      text-decoration: none;
+      display: inline-block;
+      line-height: 0.95;
+      margin: 0;
+      max-width: 100%;
+      word-break: break-word;
+    }
+
+    .masthead-title:hover {
+      text-decoration: none;
+    }
+
+    .masthead-subtitle {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.7rem, 1.8vw, 1.05rem);
+      font-weight: 700;
+      letter-spacing: clamp(1px, 0.3vw, 3px);
+      margin-top: 12px;
+      text-transform: uppercase;
+      line-height: 1.35;
+      padding: 0 5px;
+    }
+
+    /* NAVIGATION */
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(8px, 2.5vw, 25px);
+      padding: 8px 0;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.82rem, 2vw, 0.95rem);
+      letter-spacing: clamp(1px, 0.2vw, 2px);
+      text-transform: uppercase;
+      border-top: 1px solid var(--border-black);
+      border-bottom: 1px solid var(--border-black);
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .nav-item {
+      color: var(--text-black);
+      text-decoration: none;
+      padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 14px);
+      font-weight: 700;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      text-align: center;
+      touch-action: manipulation;
+    }
+
+    .nav-item:hover {
+      background-color: var(--text-black);
+      color: var(--bg-newspaper);
+    }
+
+    .nav-item.active {
+      border: 1px solid var(--border-black);
+      background-color: var(--paper-tint);
+      box-shadow: 2px 2px 0px var(--border-black);
+    }
+
+    /* FRONT PAGE FEATURE HEADLINE */
+    .headline-banner {
+      text-align: center;
+      border-bottom: 2px solid var(--border-black);
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+      width: 100%;
+    }
+
+    .main-headline {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(1.4rem, 4.2vw, 2.9rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin: 0 0 10px;
+      letter-spacing: 0.5px;
+      word-break: break-word;
+    }
+
+    .headline-deck {
+      font-family: 'Times New Roman', Times, serif;
+      font-style: italic;
+      font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+      max-width: 880px;
+      margin: 0 auto 12px;
+      line-height: 1.5;
+      padding: 0 5px;
+    }
+
+    .byline-stamp {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      letter-spacing: clamp(1px, 0.3vw, 2px);
+      text-transform: uppercase;
+      line-height: 1.35;
+    }
+
+    /* BROADSHEET EDITORIAL TWO COLUMNS */
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+      position: relative;
+      align-items: start;
+      width: 100%;
+    }
+
+    /* Vertical dividing rule between columns */
+    .editorial-grid::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(50% - 0.5px);
+      width: 1px;
+      background-color: var(--border-black);
+    }
+
+    .article-box {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .article-header {
+      border-bottom: 2px solid var(--border-black);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    .article-num {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      letter-spacing: clamp(1px, 0.2vw, 1.5px);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .article-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(1.25rem, 2.8vw, 1.55rem);
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .article-body {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.98rem, 2vw, 1.1rem);
+      line-height: 1.65;
+      text-align: justify;
+      margin: 0 0 25px;
+      word-break: break-word;
+    }
+
+    /* DROP CAP STYLING */
+    .drop-cap::first-letter {
+      float: left;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(2.8rem, 6vw, 3.6rem);
+      line-height: 0.8;
+      padding-top: 4px;
+      padding-right: 10px;
+      padding-bottom: 2px;
+      font-weight: 900;
+      color: var(--text-black);
+    }
+
+    /* EDITORIAL MEMO / BULLETIN BOX */
+    .editorial-memo {
+      border: 3px double var(--border-black);
+      background: var(--paper-tint);
+      box-shadow: var(--card-shadow);
+      padding: clamp(16px, 3.5vw, 24px) clamp(14px, 3vw, 20px);
+      margin: 20px 0 28px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .memo-badge {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      letter-spacing: clamp(1px, 0.3vw, 2px);
+      text-transform: uppercase;
+      font-weight: bold;
+      border-bottom: 1px solid var(--border-black);
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      display: block;
+      line-height: 1.35;
+    }
+
+    .memo-text {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* PRESS ACTION BUTTON */
+    .press-action-btn {
+      display: inline-block;
+      text-align: center;
+      padding: clamp(12px, 2.5vw, 14px) clamp(20px, 4vw, 28px);
+      background-color: var(--bg-newspaper);
+      color: var(--text-black);
+      border: 2px solid var(--border-black);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.88rem, 2vw, 1rem);
+      font-weight: 900;
+      letter-spacing: clamp(1px, 0.3vw, 2px);
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 4px 4px 0px var(--border-black);
+      transition: all 0.15s ease;
+      margin: 20px auto 0;
+      width: fit-content;
+      max-width: 100%;
+      box-sizing: border-box;
+      touch-action: manipulation;
+    }
+
+    .press-action-btn:hover {
+      background-color: var(--text-black);
+      color: var(--bg-newspaper);
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--border-black);
+    }
+
+    /* NEWSPAPER FOOTER */
+    .newspaper-footer {
+      margin-top: clamp(25px, 5vw, 40px);
+      text-align: center;
+      border-top: 2px solid var(--border-black);
+      padding-top: 15px;
+      font-family: 'Times New Roman', Times, serif;
+      width: 100%;
+    }
+
+    .footer-stamp {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      letter-spacing: clamp(1px, 0.3vw, 2px);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 5px;
+      line-height: 1.35;
+    }
+
+    .footer-copy {
+      font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .footer-links {
+      margin-top: 10px;
+      font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+    }
+
+    /* RESPONSIVE LAYOUT BREAKPOINTS */
+    @media (max-width: 900px) {
+      .editorial-grid {
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .editorial-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      .editorial-grid::before {
+        display: none;
+      }
+      .dateline-bar {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+      }
+      .headline-banner {
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+      }
+      .article-body {
+        text-align: left;
+      }
+      .editorial-memo {
+        padding: 18px 14px;
+      }
+      .press-action-btn {
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px 8px 30px;
+      }
+      .masthead {
+        padding: 6px 0 4px;
+      }
+      .nav-bar {
+        gap: 8px;
+        margin-bottom: 18px;
+        padding: 6px 0;
+      }
+      .nav-item {
+        font-size: 0.82rem;
+        padding: 4px 8px;
+      }
+      .drop-cap::first-letter {
+        font-size: 2.8rem;
+        padding-right: 6px;
+      }
+      .editorial-memo {
+        padding: 14px 12px;
+        box-shadow: 3px 3px 0px var(--border-black);
+      }
+      .press-action-btn {
+        box-shadow: 3px 3px 0px var(--border-black);
+      }
+    }
+
+    @media (min-width: 1400px) {
+      .newspaper-sheet {
+        max-width: 1180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="newspaper-sheet">
+    <!-- TOP DATELINE -->
+    <div class="dateline-bar">
+      <span>NO. 4,028 • VOL. XXIV</span>
+      <span id="currentDateDisplay">EDITION: LEGAL & PRIVACY CHARTER</span>
+      <span>PRICE: COMPLIMENTARY</span>
+    </div>
+
+    <div class="double-rule-thick"></div>
+
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <a href="App_UI.html" class="masthead-title">FakeSense</a>
+      <div class="masthead-subtitle">The Independent Journal of AI Forensics & Digital Verification</div>
+    </header>
+
+    <div class="double-rule-thin"></div>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="nav-bar">
+      <a href="App_UI.html" class="nav-item">[ Detection Desk ]</a>
+      <a href="about.html" class="nav-item">[ Editorial / About ]</a>
+      <a href="privacy.html" class="nav-item active">[ Privacy Policy ]</a>
+    </nav>
+
+    <!-- FRONT PAGE PRIVACY HEADLINE -->
+    <section class="headline-banner">
+      <h2 class="main-headline">Charter of Telegraphic & Data Privacy</h2>
+      <p class="headline-deck">A binding covenant concerning photographic evidence handling, non-retention of inquiries, zero invasive tracking, and the safeguarding of citizen confidentiality at FakeSense.</p>
+      <div class="byline-stamp">BY ORDER OF THE EDITORIAL DIRECTORS • OFFICIAL DISPATCH FOR CITIZEN PROTECTION</div>
+    </section>
+
+    <!-- BROADSHEET TWO-COLUMN EDITORIAL ARTICLE -->
+    <main class="editorial-grid">
+
+      <!-- LEFT COLUMN -->
+      <div class="article-box">
+        <article>
+          <div class="article-header">
+            <span class="article-num">DISPATCH I • EVIDENCE PROTOCOL</span>
+            <h3 class="article-title">Photographic Evidence Non-Retention</h3>
+          </div>
+          <p class="article-body drop-cap">
+            Photographs and visual evidence uploaded to FakeSense for forensic evaluation are processed strictly in volatile, ephemeral memory. Once uploaded, your image file is converted directly into an in-memory base64 buffer solely for transmission to the Google Gemini multi-modal inspection API.
+          </p>
+          <p class="article-body">
+            FakeSense maintains no permanent server-side gallery, disk cache, or database of uploaded portraits or documents. We never sell, share, or license uploaded imagery to third-party data brokers, nor are your personal photographs ever harvested to build biometric registries, facial recognition databases, or generative AI training sets.
+          </p>
+        </article>
+
+        <article>
+          <div class="article-header">
+            <span class="article-num">DISPATCH II • NEWS WIRE INQUIRIES</span>
+            <h3 class="article-title">Confidentiality of Fact-Checking Queries</h3>
+          </div>
+          <p class="article-body">
+            Transcriptions, news headlines, and textual claims submitted to the Wire Verification desk are queried in real time against authoritative global sources via Google Search Grounding. We do not construct reader dossiers, behavioral tracking profiles, or search histories based on the dispatches you examine. What you investigate remains entirely your private inquiry.
+          </p>
+        </article>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="article-box">
+        <article>
+          <div class="article-header">
+            <span class="article-num">DISPATCH III • ZERO TELEMETRY</span>
+            <h3 class="article-title">No Trackers, Ads, or Cross-Site Cookies</h3>
+          </div>
+          <p class="article-body">
+            FakeSense does not deploy cross-site tracking cookies, behavioral advertising beacons, fingerprinting scripts, or third-party telemetry tools. The only client-side storage mechanism utilized is standard browser session storage (<code style="font-family: 'Times New Roman', serif; font-weight: bold;">sessionStorage</code>), reserved exclusively for UI state management—specifically ensuring the vintage broadsheet intro stamp is not repeatedly displayed during a single visit.
+          </p>
+        </article>
+
+        <!-- PRIVACY CHARTER MEMO -->
+        <div class="editorial-memo">
+          <span class="memo-badge">★ OFFICIAL NOTICE: ENCRYPTION & DATA INTEGRITY ★</span>
+          <p class="memo-text">
+            <strong>Encrypted Transit:</strong> All communications between your terminal and the FakeSense service execute across industry-standard encrypted channels (HTTPS/TLS). API inquiries sent to Google Gemini utilize secure, authenticated machine-to-machine protocols.
+          </p>
+        </div>
+
+        <article>
+          <div class="article-header">
+            <span class="article-num">DISPATCH IV • THIRD-PARTY AI SERVICES</span>
+            <h3 class="article-title">Google Gemini API Disclosures</h3>
+          </div>
+          <p class="article-body">
+            Forensic analysis and search grounding are processed through the Google Gemini API. Interactions comply with enterprise API terms, ensuring that submitted prompts and imagery are processed strictly for real-time inference and response generation without being retained for public model refinement.
+          </p>
+        </article>
+
+        <!-- RETURN LINK BUTTON -->
+        <div style="text-align: center; margin-top: 10px;">
+          <a href="App_UI.html" class="press-action-btn">← ACCESS THE DETECTION DESK</a>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- NEWSPAPER FOOTER -->
+    <footer class="newspaper-footer">
+      <div class="footer-stamp">FAKESENSE INVESTIGATIVE BUREAU • DEDICATED TO OBJECTIVE TRUTH</div>
+      <p class="footer-copy">Published with algorithmic vigilance. Powered by Google Gemini Multi-Modal Reasoning. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="App_UI.html" style="color: #000; text-decoration: underline;">Detection Desk</a>
+        <span>•</span>
+        <a href="about.html" style="color: #000; text-decoration: underline;">Editorial / About</a>
+        <span>•</span>
+        <a href="privacy.html" style="color: #000; text-decoration: underline;">Privacy Policy</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Set formatted date on dateline
+    try {
+      const today = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const formatted = today.toLocaleDateString('en-US', options).toUpperCase();
+      const dateEl = document.getElementById('currentDateDisplay');
+      if (dateEl) {
+        dateEl.textContent = formatted + " • PRIVACY CHARTER";
+      }
+    } catch (e) {
+      // fallback
+    }
+  </script>
+</body>
+</html>
