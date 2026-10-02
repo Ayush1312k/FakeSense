@@ -1,4 +1,4 @@
-const BASE_API_URL = 'https://your-service.onrender.com/api/'; 
+const BASE_API_URL = 'https://fakesense.onrender.com/api/'; 
 
 let DEEPFAKE_INPUT;
 let NEWS_INPUT;
